@@ -1,0 +1,44 @@
+{
+  "name": "expressjsttest",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./script/bin/www",
+    "sequelize": "./node_modules/.bin/sequelize",
+    "migrate": "sequelize db:migrate",
+    "seed": "sequelize db:seed"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "debug": "^2.6.9",
+    "express": "^4.16.1",
+    "http-errors": "^1.6.3",
+    "jade": "^1.11.0",
+    "axios": "^0.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^5.0.1",
+    "lodash": "^4.17.15",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "sequelize": "^4.44.3",
+    "pbkdf2": "^3.0.14",
+    "mysql2": "^1.5.3",
+    "mssql": "^5.1.0",
+    "serve-favicon": "^2.5.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "sequelize-cli": "^4.0.0"
+  }
+}

@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
+import Express from 'express';
+import Index from './../controllers/index';
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+class router extends Express.Router {
+  constructor(props) {
+    super(props);
+    this.get('/', Index.homePage);
+  }
 
-module.exports = router;
+}
+
+export default new router();

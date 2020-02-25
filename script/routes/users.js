@@ -1,9 +1,12 @@
-var express = require('express');
-var router = express.Router();
+import Express from 'express';
+import Users from './../controllers/users';
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+class router extends Express.Router {
+  constructor(props) {
+    super(props);
+    this.get('/', Users.usersListing);
+  }
 
-module.exports = router;
+}
+
+export default new router();

@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./script/bin/www",
+    "start": "babel-node ./script/bin/www",
     "sequelize": "./node_modules/.bin/sequelize",
+    "build": "babel src -d ./build",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed"
   },
@@ -26,6 +27,7 @@
     "mysql2": "^1.5.3",
     "mssql": "^5.1.0",
     "serve-favicon": "^2.5.0",
+    "babel-polyfill": "^6.26.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

@@ -1,41 +1,71 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+import createError from 'http-errors';
+import Express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import indexRouter from './script/routes/index';
+import usersRouter from './script/routes/users';
+import cors from 'cors';
 
-var indexRouter = require('./script/routes/index');
-var usersRouter = require('./script/routes/users');
+class App extends Express {
+  constructor(porps) {
+    super(porps);
+    this.init();
+  }
 
-var app = express();
+  middlewares = [
+    logger('dev'),
+    Express.json(),
+    Express.urlencoded({ extended: false }),
+    cookieParser(),
+    Express.static(path.join(__dirname, 'script/public')),
+    cors()
+  ]
 
-// view engine setup
-app.set('views', path.join(__dirname, 'script/views'));
-app.set('view engine', 'jade');
+  templateViews = {
+    'views': path.join(__dirname, 'script/views'),
+    'view engine': 'jade'
+  }
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'script/public')));
+  routes = [
+    { path: '/', route: indexRouter },
+    { path: '/users', route: usersRouter }
+  ]
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+  init = () => {
+    for (const key in this.templateViews) {
+      this.set(key, this.templateViews[key]);
+    }
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+    this.middlewares.forEach(element => {
+      if (Array.isArray(element)) {
+        this.use(element[0], element[1]);
+      } else {
+        this.use(element);
+      }
+    });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    this.routes.forEach(element => {
+      this.use(element.path, element.route);
+    });
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+    // catch 404 and forward to error handler
+    this.use(function (req, res, next) {
+      next(createError(404));
+    });
 
-module.exports = app;
+    // error handler
+    this.use(function (err, req, res, next) {
+      // set locals, only providing error in development
+      res.locals.message = err.message;
+      res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+      // render the error page
+      res.status(err.status || 500);
+      res.render('error');
+    });
+  }
+
+}
+
+export default App;

@@ -4,11 +4,9 @@
  * Module dependencies.
  */
 
-import appConfig from '../../app';
+import App from '../../app';
 import debuger from 'debug';
 import http from 'http';
-
-const App = new appConfig();
 
 const debug = debuger('expressjs-mvc:server');
 

@@ -68,4 +68,4 @@ class App extends Express {
 
 }
 
-export default App;
+export default new App();

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "babel-node ./script/bin/www",
+    "start": "babel-node ./script/bin/wwwboot",
     "sequelize": "./node_modules/.bin/sequelize",
     "build": "babel src -d ./build",
     "migrate": "sequelize db:migrate",

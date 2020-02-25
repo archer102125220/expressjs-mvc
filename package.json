@@ -5,7 +5,7 @@
   "scripts": {
     "start": "babel-node ./script/bin/wwwboot",
     "sequelize": "./node_modules/.bin/sequelize",
-    "build": "babel src -d ./build",
+    "build": "babel script -d ./build",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed",
     "seed:all": "sequelize db:seed:all"

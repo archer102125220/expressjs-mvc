@@ -3,9 +3,9 @@ import Express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import indexRouter from './script/routes/index';
-import usersRouter from './script/routes/users';
-import JWTMiddleware from './script/middlewares/JWT';
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
+import JWTMiddleware from './middlewares/JWT';
 import cors from 'cors';
 
 class App extends Express {
@@ -19,13 +19,13 @@ class App extends Express {
     Express.json(),
     Express.urlencoded({ extended: false }),
     cookieParser(),
-    Express.static(path.join(__dirname, 'script/public')),
+    Express.static(path.join(__dirname, 'public')),
     cors(),
     JWTMiddleware
   ]
 
   templateViews = {
-    'views': path.join(__dirname, 'script/views'),
+    'views': path.join(__dirname, 'views'),
     'view engine': 'jade'
   }
 

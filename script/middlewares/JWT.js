@@ -1,16 +1,5 @@
-import jwt from 'cors';
+import jwt from 'express-jwt';
 
-class JWTMiddleware {
-    constructor(expressApp) {
-        this.prototype = expressApp;
-        // console.log(expressApp);
-        // for (const key in expressApp) {
-        //     console.log({ [key]: expressApp[key] });
-        //     console.log(this.prototype);
-        //     // this.prototype[key] = expressApp[key];
-        // }
-        // this.use(cors());
-    }
-}
+const secret = process.env.JWT_SECRET || 'secret12345';
 
-export default JWTMiddleware;
+export default jwt({ secret  /* PublicKey */ }).unless({ path: ['/']  /* 不需token */ });

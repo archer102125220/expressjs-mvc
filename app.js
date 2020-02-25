@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import indexRouter from './script/routes/index';
 import usersRouter from './script/routes/users';
+import JWTMiddleware from './script/middlewares/JWT';
 import cors from 'cors';
 
 class App extends Express {
@@ -19,7 +20,8 @@ class App extends Express {
     Express.urlencoded({ extended: false }),
     cookieParser(),
     Express.static(path.join(__dirname, 'script/public')),
-    cors()
+    cors(),
+    JWTMiddleware
   ]
 
   templateViews = {
@@ -28,8 +30,8 @@ class App extends Express {
   }
 
   routes = [
-    { path: '/', route: indexRouter },
-    { path: '/users', route: usersRouter }
+    { prefix: '/', route: indexRouter },
+    { prefix: '/users', route: usersRouter }
   ]
 
   init = () => {
@@ -40,13 +42,13 @@ class App extends Express {
     this.middlewares.forEach(element => {
       if (Array.isArray(element)) {
         this.use(element[0], element[1]);
-      } else {
+      } else if (typeof (element) !== 'undefined') {
         this.use(element);
       }
     });
 
     this.routes.forEach(element => {
-      this.use(element.path, element.route);
+      this.use(element.prefix, element.route);
     });
 
     // catch 404 and forward to error handler

@@ -6,8 +6,8 @@
     "start": "babel-node ./script/bin/wwwboot",
     "sequelize": "./node_modules/.bin/sequelize",
     "build": "babel script -d ./build",
-    "init:DB":"sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
-    "createDB": "sequelize db:create",
+    "init:DB":"sequelize db:drop && sequelize db:create --env development && sequelize db:migrate && sequelize db:seed:all",
+    "createDB": "sequelize db:create --env development",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed",
     "seed:all": "sequelize db:seed:all"

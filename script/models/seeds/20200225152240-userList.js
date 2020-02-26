@@ -14,7 +14,6 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    console.log(uuid);
     return queryInterface.bulkInsert('userList', [{
       account: 'admin',
       password: await bcrypt.hash('123', bcrypt.genSaltSync(8)),

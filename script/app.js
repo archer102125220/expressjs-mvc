@@ -21,7 +21,7 @@ class App extends Express {
     cookieParser(),
     Express.static(path.join(__dirname, 'public')),
     cors(),
-    JWTMiddleware.unless()
+    JWTMiddleware.unless({ path: ['/']   })
   ]
 
   templateViews = {

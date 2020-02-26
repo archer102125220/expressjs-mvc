@@ -6,9 +6,11 @@
     "start": "babel-node ./script/bin/wwwboot",
     "sequelize": "./node_modules/.bin/sequelize",
     "build": "babel script -d ./build",
+    "createDB": "sequelize db:create",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed",
-    "seed:all": "sequelize db:seed:all"
+    "seed:all": "sequelize db:seed:all",
+    "init:DB":"sequelize db:create && sequelize db:migrate && sequelize db:seed:all"
   },
   "dependencies": {
     "axios": "^0.19.0",

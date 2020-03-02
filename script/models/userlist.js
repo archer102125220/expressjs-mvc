@@ -1,8 +1,9 @@
 'use strict';
+
 import uuid from 'uuid/v4';
 import bcrypt from 'bcrypt';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const userList = sequelize.define('userList', {
     account: DataTypes.STRING,
     password: DataTypes.STRING,

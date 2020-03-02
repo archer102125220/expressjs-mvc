@@ -1,4 +1,5 @@
 'use strict';
+
 import bcrypt from 'bcrypt';
 import uuid from 'uuid/v4';
 

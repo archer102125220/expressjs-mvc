@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 
+import 'dotenv/config';
 import App from '../app';
 import debuger from 'debug';
 import http from 'http';
@@ -67,15 +68,20 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
+      console.log('EACCES');
       console.log(error);
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
     case 'EADDRINUSE':
+      console.log('EADDRINUSE');
+      console.log(error);
       console.error(bind + ' is already in use');
       process.exit(1);
       break;
     default:
+      console.log('EADDRINUSE');
+      console.log(error);
       throw error;
   }
 }

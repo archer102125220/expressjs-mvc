@@ -8,12 +8,12 @@ const envConfig = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   define: {
-    charset: 'utf8',
-    collate: 'utf8_general_ci',
+    charset: process.env.DB_DEFINE_CHARSET,
+    collate: process.env.DB_DEFINE_COLLATE,
   },
   dialectOptions: {
-    charset: 'utf8',
-    collate: 'utf8_general_ci',
+    charset: process.env.DB_DIALECT_OPTIONS_CHARSET,
+    collate: process.env.DB_DIALECT_OPTIONSE_COLLATE,
   }
 };
 

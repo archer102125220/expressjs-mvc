@@ -2,7 +2,7 @@
 import bcrypt from 'bcrypt';
 import uuid from 'uuid/v4';
 
-module.exports = {
+export default {
   up: async (queryInterface, Sequelize) => {
     /*
       Add altering commands here.

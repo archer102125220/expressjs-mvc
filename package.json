@@ -8,6 +8,7 @@
     "build": "babel script -d ./build",
     "init:DB": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
     "createDB": "sequelize db:create",
+    "dropDB":"sequelize db:drop",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed",
     "seed:all": "sequelize db:seed:all"
@@ -34,6 +35,7 @@
     "pbkdf2": "^3.0.14",
     "sequelize": "^4.44.3",
     "serve-favicon": "^2.5.0",
+    "tedious": "5.0.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

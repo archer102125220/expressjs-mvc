@@ -26,7 +26,7 @@ class App extends Express {
 
   templateViews = {
     'views': path.join(__dirname, 'views'),
-    'view engine': 'jade'
+    'view engine': 'ejs'
   }
 
   routes = [

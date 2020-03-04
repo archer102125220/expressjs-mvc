@@ -8,6 +8,7 @@ import 'dotenv/config';
 import App from '../app';
 import debuger from 'debug';
 import http from 'http';
+import socket from 'socket.io';
 
 const debug = debuger('expressjs-mvc:server');
 
@@ -23,6 +24,9 @@ App.set('port', port);
  */
 
 const server = http.createServer(App);
+const io = socket(server);
+
+io.on('connection', onConnection);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -53,7 +57,7 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Event listener for HTTP server 'error' event.
  */
 
 function onError(error) {
@@ -87,7 +91,7 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Event listener for HTTP server 'listening' event.
  */
 
 function onListening() {
@@ -97,4 +101,17 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
   console.log(`✅  The server is listen on ${bind}`); // eslint-disable-line no-console
+}
+
+
+function onConnection(socket) {
+  console.log('a user connected');
+  console.log(this);
+  console.log(io)
+  io.emit('message', 'Hello wWrld!');
+
+  socket.on('disconnect', () => {
+    console.log('a user go out');
+  });
+
 }

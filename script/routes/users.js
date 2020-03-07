@@ -4,7 +4,7 @@ import Users from './../controllers/users';
 class router extends Express.Router {
   constructor(props) {
     super(props);
-    this.get('/', Users.usersListing);
+    this.get('/', Users.usersList);
   }
 
 }

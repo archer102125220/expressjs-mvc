@@ -1,4 +1,4 @@
-'use strict';
+'use strict';//seeds
 
 import bcrypt from 'bcrypt';
 import uuid from 'uuid/v4';
@@ -15,7 +15,7 @@ export default {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('userList', [{
+    return queryInterface.bulkInsert('userLists', [{
       account: 'admin',
       password: await bcrypt.hash('123', bcrypt.genSaltSync(8)),
       email: 'example@example.com',

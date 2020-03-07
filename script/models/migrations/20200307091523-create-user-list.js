@@ -2,7 +2,7 @@
 
 export default {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('userList', {
+    return queryInterface.createTable('userLists', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -36,6 +36,6 @@ export default {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('userList');
+    return queryInterface.dropTable('userLists');
   }
 };

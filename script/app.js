@@ -15,13 +15,13 @@ class App extends Express {
   }
 
   middlewares = [
-    logger('dev'),
+    logger('dev'),//將執行途中的狀態(如：errorMessage、warning等)console出來  https://andy6804tw.github.io/2017/12/27/middleware-tutorial/
     Express.json(),
     Express.urlencoded({ extended: false }),
     cookieParser(),
-    Express.static(path.join(__dirname, 'public')),
+    Express.static(path.join(__dirname, 'public')),//https://expressjs.com/zh-tw/starter/static-files.html
     cors(),
-    JWTMiddleware.unless({ path: ['/'] })
+    JWTMiddleware.unless({ path: ['/','/api/users'] })
   ]
 
   templateViews = {
@@ -31,11 +31,10 @@ class App extends Express {
 
   routesWeb = [
     { prefix: '/', route: indexRouter },
-    { prefix: '/users', route: usersRouter }
   ]
 
   routesApi = [
-
+    { prefix: '/users', route: usersRouter }
   ]
 
   init = () => {

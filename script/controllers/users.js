@@ -1,7 +1,8 @@
 import { userList } from './../models';
 class Users {
-    usersListing = (req, res, next) => {
-        res.send('respond with a resource');
+    usersList = async (req, res, next) => {
+        const userData = await userList.findAll();
+        res.status(200).json(userData);
     }
 }
 

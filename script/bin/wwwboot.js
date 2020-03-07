@@ -24,6 +24,11 @@ App.set('port', port);
  */
 
 const server = http.createServer(App);
+
+/**
+ * Create socket server.
+ */
+
 const io = socket(server);
 
 io.on('connection', onConnection);
@@ -106,12 +111,12 @@ function onListening() {
 
 function onConnection(socket) {
   console.log('a user connected');
-  console.log(this);
-  console.log(io)
+  // console.log(socket);
   io.emit('message', 'Hello wWrld!');
 
-  socket.on('disconnect', () => {
-    console.log('a user go out');
-  });
+  socket.on('disconnect', onDisconnect);
+}
 
+function onDisconnect() {
+  console.log('a user go out');
 }

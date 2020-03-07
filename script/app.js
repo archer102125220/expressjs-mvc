@@ -21,7 +21,7 @@ class App extends Express {
     cookieParser(),
     Express.static(path.join(__dirname, 'public')),
     cors(),
-    JWTMiddleware.unless({ path: ['/']   })
+    JWTMiddleware.unless({ path: ['/'] })
   ]
 
   templateViews = {
@@ -29,9 +29,13 @@ class App extends Express {
     'view engine': 'ejs'
   }
 
-  routes = [
+  routesWeb = [
     { prefix: '/', route: indexRouter },
     { prefix: '/users', route: usersRouter }
+  ]
+
+  routesApi = [
+
   ]
 
   init = () => {
@@ -47,8 +51,11 @@ class App extends Express {
       }
     });
 
-    this.routes.forEach(element => {
+    this.routesWeb.forEach(element => {
       this.use(element.prefix, element.route);
+    });
+    this.routesApi.forEach(element => {
+      this.use('/api' + element.prefix, element.route);
     });
 
     // catch 404 and forward to error handler

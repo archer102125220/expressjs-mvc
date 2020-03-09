@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import _ from 'lodash';
+// import _ from 'lodash';
 import Sequelize from 'sequelize';
 import databaseConfig from './config/database';
 

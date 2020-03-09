@@ -1,6 +1,9 @@
+import Socket from '../socketIo';
+// import userService from './../services/userService';
 
 class Index {
-    homePage = (req, res, next) => {
+    homePage = async (req, res, next) => {
+        // Socket.io.emit('testEvent', await userService.AllUsers());
         res.render('index', { title: 'Express' });
     }
 }

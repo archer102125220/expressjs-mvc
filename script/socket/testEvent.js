@@ -1,5 +1,4 @@
-// import SocketIo from './../socketIo';
-import userService from '../services/userService';
+import userService from './../services/userService';
 
 class testEvent {
     testEvent = async (socket, name) => {

@@ -20,12 +20,16 @@ class SocketIo extends socketIO {
     onConnection = (socket) => {
         console.log('a user connected');
         const io = this.io;
-        this.sender.forEach(async element => {
-            this.io.emit(element.name, await element.data(io, element.name));//io.emit(事件名稱,變數(物件、陣列或字串、數字)) → 向前端傳送資料
+        this.sender.forEach(async ({ name, data }) => {
+            if (typeof (data) !== 'function') {
+                this.io.emit(name, data);//io.emit(事件名稱,變數(物件、陣列或字串、數字)) → 向前端傳送資料
+            } else {
+                this.io.emit(name, await data(io, name));//io.emit(事件名稱,變數(物件、陣列或字串、數字)) → 向前端傳送資料
+            }
         });
-        this.receiver.forEach(element => {
-            socket.on(element.name, async (paylod) => {//socket.on(事件名稱,function(data)) → 接受前端傳來的資料
-                await element.response(io, element.name, paylod);
+        this.receiver.forEach(({ name, response }) => {
+            socket.on(name, async (paylod) => {//socket.on(事件名稱,function(data)) → 接受前端傳來的資料
+                await response(io, name, paylod);
             });
         });
         socket.on('disconnect', this.onDisconnect);

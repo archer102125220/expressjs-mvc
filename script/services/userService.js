@@ -1,20 +1,34 @@
 import { userList, sequelize } from './../models';
 
 class userService {
-    AllUsers = async (req, res, next) => {
+    AllUsers = async (payload) => {
         const userData = await userList.findAll({
             attributes: {
-                // include: [],
-                exclude: ['password']//不顯示欄位
+                // include: [],  //外來鍵欄位
+                exclude: ['password']  //不顯示欄位
             }
         });
         // const userData = await userList.findOne({
-        //     where: { id: 1 }, // where 條件
+        //     where: { id: 1 },  // where 條件
         //     attributes: ['id']  //指定回傳欄位
-        // });x
+        // });
 
         if (userData === null) {
-            console.log('1');
+            return '查無資料';
+        }
+
+        return userData;
+    }
+    findUser = async (payload = {}) => {
+        const userData = await userList.findAll({
+            where: payload, // where 條件
+            attributes: {
+                // include: [],  //外來鍵欄位
+                exclude: ['password']  //不顯示欄位
+            }
+        });
+
+        if ((userData || []).length === 0) {
             return '查無資料';
         }
 

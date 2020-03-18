@@ -11,8 +11,13 @@ export default (sequelize, DataTypes) => {
     account_Id: {
       type: DataTypes.UUID,
       defaultValue: uuid,
-    }
+    },
+    // references: { //外來鍵 https://itbilu.com/nodejs/npm/EJarwPD8W.html
+    //   model: 'User', //資料表名稱
+    //   key: 'id' //對應欄位
+    // },
   }, {
+    // tableName: 'userList',
     instanceMethods: {
       generateHash(password) {
         return bcrypt.hash(password, bcrypt.genSaltSync(8));

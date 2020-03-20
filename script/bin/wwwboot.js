@@ -8,16 +8,25 @@ import 'dotenv/config';
 import App from './../app';
 import debuger from 'debug';
 import http from 'http';
+import fs from 'fs';
+import https from 'https';
 import Socket from './../socketIo';
 
 const debug = debuger('expressjs-mvc:server');
+
 
 /**
  * Get port from environment and store in Express.
  */
 
 const port = normalizePort(process.env.APP_PORT || '3000');
-App.set('port', port);
+const sslPort = normalizePort(process.env.SSL_APP_PORT);
+if (sslPort) {
+  App.set('port', [port, sslPort]);
+} else {
+  App.set('port', port);
+}
+
 
 /**
  * Create HTTP server.
@@ -35,8 +44,22 @@ Socket.init(server);
  */
 
 server.listen(port, process.env.APP_HOST || '0.0.0.0');
+
+
 server.on('error', onError);
-server.on('listening', onListening);
+server.on('listening', () => onListening(server));
+
+if (sslPort) {
+  //https://medium.com/@savemuse/node-js-%E5%BB%BA%E7%AB%8Bhttps%E4%BC%BA%E6%9C%8D%E5%99%A8-46442e9cd433
+  const privateKey = fs.readFileSync(__dirname + '/sslcert/server-key.pem', 'utf8');
+  const certificate = fs.readFileSync(__dirname + '/sslcert/server-cert.pem', 'utf8');
+  const ca = fs.readFileSync(__dirname + '/sslcert/cert.pem', 'utf8');
+  const credentials = { key: privateKey, cert: certificate, ca, passphrase: '??' };
+  const httpsServer = https.createServer(credentials, App);
+  httpsServer.listen(sslPort, process.env.APP_HOST || '0.0.0.0');
+  httpsServer.on('error', onError);
+  httpsServer.on('listening', () => onListening(httpsServer));
+}
 
 /**
  * Normalize a port into a number, string, or false.
@@ -96,8 +119,8 @@ function onError(error) {
  * Event listener for HTTP server 'listening' event.
  */
 
-function onListening() {
-  const addr = server.address();
+function onListening(services) {
+  const addr = services.address();
   const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;

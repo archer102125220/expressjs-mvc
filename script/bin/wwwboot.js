@@ -21,35 +21,23 @@ const debug = debuger('expressjs-mvc:server');
 
 const port = normalizePort(process.env.APP_PORT || '3000');
 const sslPort = normalizePort(process.env.SSL_APP_PORT);
-if (sslPort) {
+if (process.env.HTTPS && process.env.HTTP) {
   App.set('port', [port, sslPort]);
-} else {
+} else if (process.env.HTTP) {
   App.set('port', port);
+} else if (process.env.HTTPS) {
+  App.set('port', sslPort);
 }
 
+if (process.env.HTTP) {
+  const server = http.createServer(App); //Create HTTP server.
+  Socket.init(server); //Create socket server.
+  server.listen(port, process.env.APP_HOST || '0.0.0.0'); //Listen on provided port, on all network interfaces.
+  server.on('error', onError);
+  server.on('listening', () => onListening(server));
+}
 
-/**
- * Create HTTP server.
- */
-
-const server = http.createServer(App);
-
-/**
- * Create socket server.
- */
-Socket.init(server);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port, process.env.APP_HOST || '0.0.0.0');
-
-
-server.on('error', onError);
-server.on('listening', () => onListening(server));
-
-if (sslPort) {
+if (process.env.HTTPS) {
   //https://medium.com/@savemuse/node-js-%E5%BB%BA%E7%AB%8Bhttps%E4%BC%BA%E6%9C%8D%E5%99%A8-46442e9cd433
   //https://dev.twsiyuan.com/2017/10/openssl-unable-to-load-config.html
   const privateKey = fs.readFileSync(__dirname + '/sslcert/server-key.pem', 'utf8');
@@ -57,6 +45,9 @@ if (sslPort) {
   const ca = fs.readFileSync(__dirname + '/sslcert/cert.pem', 'utf8');
   const credentials = { key: privateKey, cert: certificate, ca, passphrase: '??' };
   const httpsServer = https.createServer(credentials, App);
+  if (Socket.state !== 'connected' && Socket.state !== 'connection') {
+    Socket.init(httpsServer);
+  }
   httpsServer.listen(sslPort, process.env.APP_HOST || '0.0.0.0');
   httpsServer.on('error', onError);
   httpsServer.on('listening', () => onListening(httpsServer));

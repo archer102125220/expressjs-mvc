@@ -3,9 +3,11 @@ import testEvent from './socket/testEvent';
 
 class SocketIo extends socketIO {
     io = {}
+    state = ''
 
     init = (server) => {
         this.io = this.listen(server);
+        this.state = 'connection';
         this.io.on('connection', this.onConnection);
     }
 
@@ -33,6 +35,7 @@ class SocketIo extends socketIO {
             });
         });
         socket.on('disconnect', this.onDisconnect);
+        this.state = 'connected';
     }
 
     onDisconnect = () => {

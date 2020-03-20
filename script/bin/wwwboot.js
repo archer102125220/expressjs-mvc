@@ -51,6 +51,7 @@ server.on('listening', () => onListening(server));
 
 if (sslPort) {
   //https://medium.com/@savemuse/node-js-%E5%BB%BA%E7%AB%8Bhttps%E4%BC%BA%E6%9C%8D%E5%99%A8-46442e9cd433
+  //https://dev.twsiyuan.com/2017/10/openssl-unable-to-load-config.html
   const privateKey = fs.readFileSync(__dirname + '/sslcert/server-key.pem', 'utf8');
   const certificate = fs.readFileSync(__dirname + '/sslcert/server-cert.pem', 'utf8');
   const ca = fs.readFileSync(__dirname + '/sslcert/cert.pem', 'utf8');

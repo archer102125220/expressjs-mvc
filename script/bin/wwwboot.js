@@ -58,7 +58,7 @@ if (process.env.HTTPS) {
  */
 
 function normalizePort(val) {
-  const port = parseInt(val, 10);
+  const port = val;
 
   if (isNaN(port)) {
     // named pipe
@@ -67,7 +67,7 @@ function normalizePort(val) {
 
   if (port >= 0) {
     // port number
-    return port;
+    return parseInt(port, 10);
   }
 
   return false;
@@ -101,7 +101,7 @@ function onError(error) {
       process.exit(1);
       break;
     default:
-      console.log('EADDRINUSE');
+      console.log('default');
       console.log(error);
       throw error;
   }
@@ -117,5 +117,11 @@ function onListening(services) {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log(`✅  The server is listen on ${bind}`); // eslint-disable-line no-console
+  let outPut = '✅  The ';
+  if (services.key) {
+    outPut += 'https';
+  } else {
+    outPut += 'http';
+  }
+  console.log(`${outPut} server is listen on ${bind}`); // eslint-disable-line no-console
 }

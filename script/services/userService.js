@@ -1,3 +1,5 @@
+import bcrypt from 'bcrypt';
+import uuid from 'uuid/v4';
 import { userList, sequelize } from './../models';
 
 class userService {
@@ -33,6 +35,19 @@ class userService {
         }
 
         return userData;
+    }
+    createUser = async (payload = {}) => {
+        const { account, password, email } = payload;
+        let res = false;
+        const userData = await userList.findOrCreate({
+            where: { account }, 
+            defaults:{ 
+                email,
+                password:await bcrypt.hash( password, bcrypt.genSaltSync(8)),
+                //account_Id: uuid(),
+            }
+        }).spread((data,created) => res = created);
+        return res;
     }
 }
 

@@ -8,6 +8,13 @@ class Users {
         res.status(200).json(userData);
     }
 
+    findUser = async (req, res, next) => {
+        const { account } = req.params; //→接受前端來的資料
+        const userData = await UserService.findUser({account});
+
+        res.status(200).json(userData);
+    }
+
     createUser = async (req, res, next) => {
         const { body } = req; 
         const clear = await UserService.createUser(body);

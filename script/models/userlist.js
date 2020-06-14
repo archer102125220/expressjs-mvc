@@ -1,7 +1,6 @@
 'use strict';
 
 import uuid from 'uuid/v4';
-import bcrypt from 'bcrypt';
 
 export default (sequelize, DataTypes) => {
   const userList = sequelize.define('userList', {
@@ -18,14 +17,6 @@ export default (sequelize, DataTypes) => {
     // },
   }, {
     // tableName: 'userList',
-    instanceMethods: {
-      generateHash(password) {
-        return bcrypt.hash(password, bcrypt.genSaltSync(8));
-      },
-      validPassword(password) {
-        return bcrypt.compare(password, this.password);
-      }
-    }
   });
   userList.associate = function (models) {
     // associations can be defined here

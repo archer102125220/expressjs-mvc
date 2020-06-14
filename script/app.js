@@ -21,7 +21,12 @@ class App extends Express {
     cookieParser(),
     Express.static(path.join(__dirname, 'public')),//https://expressjs.com/zh-tw/starter/static-files.html
     cors(),
-    JWTMiddleware.unless({ path: ['/',/^\/api\/users\/account\/.*/,'/api/users/registered'] })
+    JWTMiddleware.unless({ path: [
+      '/',
+      /^\/api\/users\/account\/.*/,
+      '/api/users/registered',
+      '/api/users/login'
+    ]})
   ]
 
   templateViews = {

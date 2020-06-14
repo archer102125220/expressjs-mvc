@@ -7,6 +7,7 @@ class router extends Express.Router {
     this.get('/', Users.usersList);
     this.post('/registered', Users.createUser);
     this.get('/account/:name', Users.findUser);
+    this.get('/login', Users.loginUser);
   }
 
 }

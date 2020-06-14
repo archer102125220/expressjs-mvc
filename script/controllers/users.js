@@ -1,4 +1,6 @@
+import crypto from 'crypto';
 import UserService from './../services/userService';
+const sha = crypto.createHash('sha1');
 
 class Users {
     usersList = async (req, res, next) => {
@@ -11,12 +13,25 @@ class Users {
     }
 
     findUser = async (req, res, next) => {
-        const { name } = req.params; //→接受URL上的資料(ex:/api/users/account/:name)
-        const userData = await UserService.findUser({account:name});
+        const { name:account } = req.params; //→接受URL上的資料(ex:/api/users/account/:name)
+        const userData = await UserService.findUser({ account });
         if ((userData || []).length === 0) {
             res.status(200).json('查無資料');
         }
         res.status(200).json(userData);
+    }
+    
+    loginUser = async (req, res, next) => {
+        const { account, password } = req.query; //→接受URL上的資料(ex:/api/users/account/:name)
+        const userData = await UserService.findUser({
+            account,
+            password:sha.update(password).digest('hex')
+        });
+        if ((userData || []).length === 0) {
+            res.status(200).json('查無資料');
+        }else{
+            res.status(200).json(userData);
+        }
     }
 
     createUser = async (req, res, next) => {

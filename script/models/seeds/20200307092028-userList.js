@@ -1,7 +1,8 @@
 'use strict';//seeds
 
-import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import uuid from 'uuid/v4';
+const sha = crypto.createHash('sha1');
 
 export default {
   up: async (queryInterface, Sequelize) => {
@@ -17,7 +18,7 @@ export default {
     */
     return queryInterface.bulkInsert('userLists', [{
       account: 'admin',
-      password: await bcrypt.hash('123', bcrypt.genSaltSync(8)),
+      password: sha.update('123').digest('hex'),
       email: 'example@example.com',
       account_Id: uuid(),
       createdAt: new Date(),

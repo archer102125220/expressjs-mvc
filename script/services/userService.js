@@ -1,9 +1,10 @@
-import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 import { userList, sequelize } from './../models';
 const { Op } = sequelize;
+const sha = crypto.createHash('sha1');
 
 class userService {
-    AllUsers = async (payload) => {
+    AllUsers = async () => {
         return await userList.findAll({
             attributes: {
                 // include: [],  //外來鍵欄位
@@ -36,7 +37,7 @@ class userService {
             defaults:{ 
                 account,
                 email,
-                password:await bcrypt.hash( password, bcrypt.genSaltSync(8))
+                password:sha.update(password).digest('hex')
             }
         }).spread((data,created) => created);
     }

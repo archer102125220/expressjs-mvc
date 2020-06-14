@@ -5,6 +5,7 @@ import JWTMiddleware from './../middlewares/JWT';
 class Users {
     usersList = async (req, res, next) => {
         //const { id, start, end } = req.body; //→接受前端來的資料
+        console.log(req.auth);
         const userData = await UserService.AllUsers();
         if ((userData || []).length === 0) {
             res.status(200).json('查無資料');

@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import UserService from './../services/userService';
-const sha = crypto.createHash('sha1');
+import JWTMiddleware from './../middlewares/JWT';
 
 class Users {
     usersList = async (req, res, next) => {
@@ -25,12 +25,14 @@ class Users {
         const { account, password } = req.query; //→接受URL上的資料(ex:/api/users/account/:name)
         const userData = await UserService.findUser({
             account,
-            password:sha.update(password).digest('hex')
+            password:crypto.createHash('sha1').update(password).digest('hex')
         });
+
         if ((userData || []).length === 0) {
             res.status(200).json('查無資料');
         }else{
-            res.status(200).json(userData);
+            console.log(userData[0].dataValues);
+            res.status(200).json(JWTMiddleware.encode(userData[0].dataValues));
         }
     }
 

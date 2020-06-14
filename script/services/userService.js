@@ -1,7 +1,6 @@
 import crypto from 'crypto';
 import { userList, sequelize } from './../models';
 const { Op } = sequelize;
-const sha = crypto.createHash('sha1');
 
 class userService {
     AllUsers = async () => {
@@ -37,7 +36,7 @@ class userService {
             defaults:{ 
                 account,
                 email,
-                password:sha.update(password).digest('hex')
+                password: crypto.createHash('sha1').update(password).digest('hex')
             }
         }).spread((data,created) => created);
     }

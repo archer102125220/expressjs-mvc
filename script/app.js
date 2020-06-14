@@ -29,11 +29,6 @@ class App extends Express {
     ]})
   ]
 
-  templateViews = {
-    'views': path.join(__dirname, 'views'),
-    'view engine': 'ejs'
-  }
-
   routesWeb = [
     { prefix: '/', route: indexRouter },
   ]
@@ -41,6 +36,11 @@ class App extends Express {
   routesApi = [
     { prefix: '/users', route: usersRouter }
   ]
+
+  templateViews = {
+    'views': path.join(__dirname, 'views'),
+    'view engine': 'ejs'
+  }
 
   init = () => {
     for (const key in this.templateViews) {

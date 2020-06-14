@@ -9,8 +9,8 @@ class Users {
     }
 
     findUser = async (req, res, next) => {
-        const { account } = req.params; //→接受前端來的資料
-        const userData = await UserService.findUser({account});
+        const { name } = req.params; //→接受前端來的資料
+        const userData = await UserService.findUser({account:name});
 
         res.status(200).json(userData);
     }

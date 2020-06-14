@@ -11,7 +11,7 @@ class Users {
     createUser = async (req, res, next) => {
         const { body } = req; 
         const clear = await UserService.createUser(body);
-        
+
         if(clear){
             res.status(200).json('註冊成功！');
         }else{

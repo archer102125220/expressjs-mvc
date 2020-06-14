@@ -9,7 +9,7 @@ class Users {
     }
 
     findUser = async (req, res, next) => {
-        const { name } = req.params; //→接受前端來的資料
+        const { name } = req.params; //→接受URL上的資料(ex:/api/users/account/:name)
         const userData = await UserService.findUser({account:name});
 
         res.status(200).json(userData);

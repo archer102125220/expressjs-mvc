@@ -1,5 +1,17 @@
 import multer from 'multer';
-//({ dset:'./../public/images/avater' })
+import path from 'path';
+
+//https://github.com/expressjs/multer/blob/master/doc/README-zh-cn.md
+//const dest = process.env.UPLOAD_DIR || 'script/public/images/upload';
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, process.env.UPLOAD_DIR || 'script/public/images/upload')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + path.basename(file.originalname, path.extname(file.originalname)) + '-' + Date.now() + path.extname(file.originalname))
+    }
+});
+
 class uploader extends multer {
     constructor(props){
         super(props);
@@ -15,4 +27,4 @@ class uploader extends multer {
 
 }
 
-export default new uploader({ dset:'./../public/images/upload' });
+export default new uploader({ storage });

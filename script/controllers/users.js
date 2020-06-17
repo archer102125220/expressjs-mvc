@@ -38,14 +38,23 @@ class Users {
     }
 
     createUser = async (req, res, next) => {
-        const { body } = req; 
-        const clear = await UserService.createUser(body);
+        const { body:payload } = req; 
+        const clear = await UserService.createUser(payload);
 
         if(clear){
             res.status(200).json('註冊成功！');
         }else{
             res.status(200).json('帳號或信箱已存在！');
         }
+    }
+
+    imgUploadTest = async (req, res, next) => {
+        const { body:payload } = req; 
+        console.log(payload, req.file);
+
+        res.status(200).json({
+            ...payload, avater:req.avater,file:req.file
+        });
     }
 
     // usersListSocket = async (packet, next) => {

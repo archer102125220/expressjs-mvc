@@ -3,10 +3,11 @@ import Express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import cors from 'cors';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import JWTMiddleware from './middlewares/JWT';
-import cors from 'cors';
+import uploader from './middlewares/uploader';
 
 class App extends Express {
   constructor(porps) {
@@ -24,9 +25,10 @@ class App extends Express {
     JWTMiddleware.unless({ path: [
       '/',
       /^\/api\/users\/account\/.*/,
-      '/api/users/registered',
+      '/api/users/img_upload_test',
       '/api/users/login'
-    ]})
+    ]}),
+    uploader.avater()
   ]
 
   routesWeb = [

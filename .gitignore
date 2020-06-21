@@ -1,6 +1,7 @@
 
 
 build
+script/public/images/upload
 node_modules
 
 .env

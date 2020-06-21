@@ -7,6 +7,7 @@ export default (sequelize, DataTypes) => {
     account: DataTypes.STRING,
     password: DataTypes.STRING,
     email: DataTypes.STRING,
+    avater: DataTypes.STRING,
     account_Id: {
       type: DataTypes.UUID,
       defaultValue: uuid,

@@ -25,6 +25,7 @@ class App extends Express {
     JWTMiddleware.unless({ path: [
       '/',
       /^\/api\/users\/account\/.*/,
+      '/api/users/registered',
       '/api/users/img_upload_test',
       '/api/users/login'
     ]}),

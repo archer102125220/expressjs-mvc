@@ -25,7 +25,7 @@ class userService {
         });
     }
     createUser = async (payload = {}) => {
-        const { account, password, email } = payload;
+        const { account, password, email, avater } = payload;
         return await userList.findOrCreate({
             where: { 
                 [Op.or]:[
@@ -36,6 +36,7 @@ class userService {
             defaults:{ 
                 account,
                 email,
+                avater: avater ? (process.env.AVATER_DIR || '/images/upload/') + avater : '/images/damage.png',
                 password: crypto.createHash('sha1').update(password).digest('hex')
             }
         }).spread((data,created) => created);

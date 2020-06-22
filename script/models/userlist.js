@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     avater: {
       type: DataTypes.STRING,
-      defaultValue: '',
+      defaultValue: '/images/damage.png',
     },
     account_Id: {
       type: DataTypes.UUID,

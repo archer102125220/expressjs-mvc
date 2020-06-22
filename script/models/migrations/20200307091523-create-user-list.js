@@ -21,6 +21,10 @@ export default {
         type: Sequelize.STRING,
         allowNull: false
       },
+      avater: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       account_Id: {
         // type: Sequelize.INTEGER
         type: Sequelize.UUID

@@ -20,6 +20,7 @@ export default {
       account: 'admin',
       password: sha.update('123').digest('hex'),
       email: 'example@example.com',
+      avater: '/images/damage.png',
       account_Id: uuid(),
       createdAt: new Date(),
       updatedAt: new Date()

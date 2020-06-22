@@ -32,14 +32,13 @@ class Users {
         if ((userData || []).length === 0) {
             res.status(200).json('查無資料');
         }else{
-            console.log(userData[0].dataValues);
             res.status(200).json(JWTMiddleware.encode(userData[0].dataValues));
         }
     }
 
     createUser = async (req, res, next) => {
         const { body:payload } = req; 
-        const clear = await UserService.createUser(payload);
+        const clear = await UserService.createUser({...payload, avater:(req.file || {}).filename});
 
         if(clear){
             res.status(200).json('註冊成功！');

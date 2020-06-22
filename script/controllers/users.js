@@ -6,11 +6,11 @@ class Users {
     usersList = async (req, res, next) => {
         //const { id, start, end } = req.body; //→接受前端來的資料
         console.log(req.auth);
-        const userData = await UserService.AllUsers();
+        const userData = await UserService.AllUsers(req.auth.id);
         if ((userData || []).length === 0) {
             res.status(200).json('查無資料');
         }
-        res.status(200).json(userData);
+        res.status(200).json([{ ...req.auth }, ...userData]);
     }
 
     findUser = async (req, res, next) => {

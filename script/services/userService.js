@@ -3,8 +3,13 @@ import { userList, sequelize } from './../models';
 const { Op } = sequelize;
 
 class userService {
-    AllUsers = async () => {
+    AllUsers = async (payload = -1) => {
         return await userList.findAll({
+            where: {
+                [Op.not]:[
+                    { id:{ [Op.eq]:payload } },
+                ]
+            },
             attributes: {
                 // include: [],  //外來鍵欄位
                 exclude: ['password']  //不顯示欄位

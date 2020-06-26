@@ -3,6 +3,7 @@
 build
 script/public/images/upload
 node_modules
+sslcert
 
 .env
 

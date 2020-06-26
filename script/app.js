@@ -40,14 +40,15 @@ class App extends Express {
     { prefix: '/users', route: usersRouter }
   ]
 
-  templateViews = {
+  setting = {
     'views': path.join(__dirname, 'views'),
-    'view engine': 'ejs'
+    'view engine': 'ejs',
+    'trust proxy': true
   }
 
   init = () => {
-    for (const key in this.templateViews) {
-      this.set(key, this.templateViews[key]);
+    for (const key in this.setting) {
+      this.set(key, this.setting[key]);
     }
 
     this.middlewares.forEach(element => {
@@ -73,13 +74,18 @@ class App extends Express {
     // error handler
     this.use(function (err, req, res, next) {
       if(err.name === 'UnauthorizedError'){
-        console.log('invalid token');
+        console.error('invalid token');
         res.status(401).send('invalid token');
         return;
       }
       // set locals, only providing error in development
-      res.locals.message = err.message;
-      res.locals.error = req.app.get('env') === 'development' ? err : {};
+      /*if(err.name === 'UnauthorizedError'){
+        res.locals.message = 'invalid token';
+        res.locals.error = {};
+      }else{*/
+        res.locals.message = err.message;
+        res.locals.error = req.app.get('env') === 'development' ? err : {};
+      //}
 
       // render the error page
       res.status(err.status || 500);

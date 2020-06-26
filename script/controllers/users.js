@@ -30,9 +30,9 @@ class Users {
         });
 
         if ((userData || []).length === 0) {
-            res.status(200).json('查無資料');
+            res.status(200).send('查無資料');
         }else{
-            res.status(200).json(JWTMiddleware.encode(userData[0].dataValues));
+            res.status(200).send(JWTMiddleware.encode(userData[0].dataValues));
         }
     }
 
@@ -41,9 +41,9 @@ class Users {
         const clear = await UserService.createUser({...payload, avater:(req.file || {}).filename});
 
         if(clear){
-            res.status(200).json('註冊成功！');
+            res.status(200).send('註冊成功！');
         }else{
-            res.status(200).json('帳號或信箱已存在！');
+            res.status(200).send('帳號或信箱已存在！');
         }
     }
 

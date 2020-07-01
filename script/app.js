@@ -60,10 +60,10 @@ class App extends Express {
     });
 
     this.routesWeb.forEach(element => {
-      this.use(element.prefix, element.route);
+      this.use((element.prefix || '/'), element.route);
     });
     this.routesApi.forEach(element => {
-      this.use('/api' + element.prefix, element.route);
+      this.use('/api' + (element.prefix || ''), element.route);
     });
 
     // catch 404 and forward to error handler
@@ -79,13 +79,8 @@ class App extends Express {
         return;
       }
       // set locals, only providing error in development
-      /*if(err.name === 'UnauthorizedError'){
-        res.locals.message = 'invalid token';
-        res.locals.error = {};
-      }else{*/
         res.locals.message = err.message;
         res.locals.error = req.app.get('env') === 'development' ? err : {};
-      //}
 
       // render the error page
       res.status(err.status || 500);

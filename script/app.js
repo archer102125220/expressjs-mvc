@@ -19,7 +19,7 @@ class App extends Express {
     logger('dev'),//將執行途中的狀態(如：errorMessage、warning等)console出來  https://andy6804tw.github.io/2017/12/27/middleware-tutorial/
     Express.json(),
     Express.urlencoded({ extended: false }),
-    cookieParser(),
+    cookieParser(),//將cookie塞進controller的req物件裡面  http://expressjs.com/en/resources/middleware/cookie-parser.html
     Express.static(path.join(__dirname, 'public')),//https://expressjs.com/zh-tw/starter/static-files.html
     cors(),
     JWTMiddleware.unless({ path: [

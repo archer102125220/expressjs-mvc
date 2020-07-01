@@ -22,7 +22,7 @@ export default {
         allowNull: false
       },
       avater: {
-        type: Sequelize.STRING,
+        type: process.env.BUFFER_IMAGE ? Sequelize.BLOB : Sequelize.STRING,
         allowNull: false
       },
       account_Id: {

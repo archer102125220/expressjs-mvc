@@ -27,7 +27,7 @@ class Users {
         const userData = await UserService.findUser({
             account,
             password:crypto.createHash('sha1').update(password).digest('hex')
-        });
+        }, true);
 
         if ((userData || []).length === 0) {
             res.status(200).send('查無資料');

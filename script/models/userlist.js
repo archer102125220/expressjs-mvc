@@ -1,6 +1,7 @@
 'use strict';
 
 import uuid from 'uuid/v4';
+import fs from 'fs';
 
 export default (sequelize, DataTypes) => {
   const userList = sequelize.define('userList', {
@@ -9,7 +10,7 @@ export default (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     avater: {
       type: DataTypes.STRING,
-      defaultValue: '/images/damage.png',
+      defaultValue: process.env.BUFFER_IMAGE ? fs.readFileSync(__dirname + '/../public/images/damage.png') : '/images/damage.png',
     },
     account_Id: {
       type: DataTypes.UUID,

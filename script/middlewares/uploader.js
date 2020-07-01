@@ -3,7 +3,8 @@ import path from 'path';
 
 //https://github.com/expressjs/multer/blob/master/doc/README-zh-cn.md
 //const dest = process.env.UPLOAD_DIR || 'script/public/images/upload';
-const storage = multer.diskStorage({
+const { diskStorage, memoryStorage } = multer;
+const storage = process.env.BUFFER_IMAGE ? memoryStorage() : diskStorage({
     destination: function (req, file, cb) {
         cb(null, process.env.UPLOAD_DIR || 'script/public/images/upload')
     },

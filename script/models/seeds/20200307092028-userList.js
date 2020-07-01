@@ -2,6 +2,7 @@
 
 import crypto from 'crypto';
 import uuid from 'uuid/v4';
+import fs from 'fs';
 const sha = crypto.createHash('sha1');
 
 export default {
@@ -16,11 +17,13 @@ export default {
         isBetaMember: false
       }], {});
     */
+    const avater = process.env.BUFFER_IMAGE ? fs.readFileSync(__dirname + '/../../public/images/damage.png') : '/images/damage.png';
+
     return queryInterface.bulkInsert('userLists', [{
       account: 'admin',
       password: sha.update('123').digest('hex'),
       email: 'example@example.com',
-      avater: '/images/damage.png',
+      avater,
       account_Id: uuid(),
       createdAt: new Date(),
       updatedAt: new Date()

@@ -20,17 +20,19 @@ class userService {
         //     attributes: ['id']  //指定回傳欄位
         // });
     }
-    findUser = async (payload = {}) => {
+    findUser = async (payload = {}, login = false) => {
+        const exclude = login ? ['password', 'avater'] : ['password'];
         return await userList.findAll({
             where: payload, // where 條件
             attributes: {
                 // include: [],  //外來鍵欄位
-                exclude: ['password']  //不顯示欄位
+                exclude,  //不顯示欄位
             }
         });
     }
     createUser = async (payload = {}) => {
         const { account, password, email, avater } = payload;
+        const img = avater ? (process.env.AVATER_DIR || '/images/upload/') + avater : '/images/damage.png';
         return await userList.findOrCreate({
             where: { 
                 [Op.or]:[
@@ -41,7 +43,7 @@ class userService {
             defaults:{ 
                 account,
                 email,
-                avater: avater ? (process.env.AVATER_DIR || '/images/upload/') + avater : '/images/damage.png',
+                avater: process.env.BUFFER_IMAGE ? avater: img,
                 password: crypto.createHash('sha1').update(password).digest('hex')
             }
         }).spread((data,created) => created);

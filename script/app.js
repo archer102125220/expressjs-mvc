@@ -29,7 +29,8 @@ class App extends Express {
       '/api/users/img_upload_test',
       '/api/users/login'
     ]}),
-    uploader.avater()
+    uploader.avater(),
+    uploader.video()
   ]
 
   routesWeb = [

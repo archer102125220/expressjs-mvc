@@ -6,6 +6,7 @@ node_modules
 sslcert
 
 .env
+.DS_Store
 
 package-lock.json
 yarn.lock

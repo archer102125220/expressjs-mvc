@@ -1,7 +1,7 @@
 
 
 build
-script/public/upload
+script/public/upload/*
 node_modules
 sslcert
 

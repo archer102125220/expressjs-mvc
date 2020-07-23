@@ -52,7 +52,7 @@ class Users {
         console.log(req.file);
 
         res.status(200).json({
-            ...payload, avater:req.avater,file:req.file
+            ...payload, avater:req.avater, file:req.file, video:req.video
         });
     }
 

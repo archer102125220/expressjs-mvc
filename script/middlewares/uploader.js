@@ -4,27 +4,33 @@ import path from 'path';
 //https://github.com/expressjs/multer/blob/master/doc/README-zh-cn.md
 //const dest = process.env.UPLOAD_IMG || 'script/public/upload';
 const { diskStorage, memoryStorage } = multer;
+function filename(req, file, cb) {
+    cb(null, file.fieldname + '-' + path.basename(file.originalname, path.extname(file.originalname)) + '-' + Date.now() + path.extname(file.originalname))
+}
 
 class uploader {
     constructor(props){
-        this.imgUploader= new multer({ storage:process.env.BUFFER_IMAGE ? memoryStorage() : diskStorage({
+        this.imgUploader= this.creater(process.env.UPLOAD_IMG);
+        if(!process.env.BUFFER_IMAGE){
+            this.avaterUploader= new multer({ storage: diskStorage({
+                destination: function (req, file, cb) {
+                    cb(null, __dirname + '/../public' + process.env.AVATER_DIR || 'script/public/images/upload')
+                },
+                filename: function (req, file, cb) {
+                    cb(null, file.fieldname + '-' + path.basename(file.originalname, path.extname(file.originalname)) + '-' + Date.now() + path.extname(file.originalname))
+                }
+            }) });
+        }
+        this.videoUploader = this.creater(process.env.UPLOAD_VIDEO);
+    }
+
+    creater = (dir) => {
+        return new multer({ storage: process.env.BUFFER_IMAGE ? memoryStorage() : diskStorage({
             destination: function (req, file, cb) {
-                cb(null, process.env.UPLOAD_IMG || 'script/public/upload')
+                cb(null, dir || 'script/public/upload')
             },
-            filename: function (req, file, cb) {
-                cb(null, file.fieldname + '-' + path.basename(file.originalname, path.extname(file.originalname)) + '-' + Date.now() + path.extname(file.originalname))
-            }
-        }) });
-        this.videoUploader = new multer({ storage:diskStorage({
-            destination: function (req, file, cb) {
-                cb(null, process.env.UPLOAD_VIDEO || 'script/public/upload')
-            },
-            filename: function (req, file, cb) {
-                cb(null, file.fieldname + '-' + path.basename(file.originalname, path.extname(file.originalname)) + '-' + Date.now() + path.extname(file.originalname))
-            }
-        }),
-        limits: { fileSize: 100000000 }
-        });
+            filename
+        })});
     }
 
     arrayImg =  () => {
@@ -32,7 +38,7 @@ class uploader {
     }
 
     avater = () => {
-        return this.imgUploader.single('avater');
+        return !process.env.BUFFER_IMAGE ? this.avaterUploader.single('avater') : this.imgUploader.single('avater');
     }
 
     video = () => {

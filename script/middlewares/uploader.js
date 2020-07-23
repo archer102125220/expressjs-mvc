@@ -16,9 +16,7 @@ class uploader {
                 destination: function (req, file, cb) {
                     cb(null, __dirname + '/../public' + process.env.AVATER_DIR || 'script/public/images/upload')
                 },
-                filename: function (req, file, cb) {
-                    cb(null, file.fieldname + '-' + path.basename(file.originalname, path.extname(file.originalname)) + '-' + Date.now() + path.extname(file.originalname))
-                }
+                filename
             }) });
         }
         this.videoUploader = this.creater(process.env.UPLOAD_VIDEO);

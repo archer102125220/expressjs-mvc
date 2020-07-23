@@ -32,7 +32,7 @@ class userService {
     }
     createUser = async (payload = {}) => {
         const { account, password, email, avater } = payload;
-        const img = avater ? (process.env.AVATER_DIR || '/images/upload/') + avater : '/images/damage.png';
+        const img = avater ? (process.env.AVATER_DIR || '/upload/') + avater : '/images/damage.png';
         return await userList.findOrCreate({
             where: { 
                 [Op.or]:[

@@ -49,7 +49,7 @@ class Users {
 
     imgUploadTest = async (req, res, next) => {
         const { body:payload } = req; 
-        console.log(payload, req.file);
+        console.log(req.file);
 
         res.status(200).json({
             ...payload, avater:req.avater,file:req.file

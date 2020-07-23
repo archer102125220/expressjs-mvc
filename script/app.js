@@ -7,7 +7,7 @@ import cors from 'cors';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import JWTMiddleware from './middlewares/JWT';
-import uploader from './middlewares/uploader';
+//import uploader from './middlewares/uploader';
 
 class App extends Express {
   constructor(porps) {
@@ -27,10 +27,11 @@ class App extends Express {
       /^\/api\/users\/account\/.*/,
       '/api/users/registered',
       '/api/users/img_upload_test',
+      '/api/users/video_upload_test',
       '/api/users/login'
     ]}),
-    uploader.avater(),
-    uploader.video()
+    //uploader.video(),
+    //uploader.avater()
   ]
 
   routesWeb = [

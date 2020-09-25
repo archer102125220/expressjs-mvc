@@ -5,11 +5,11 @@ const { Op } = sequelize;
 class userService {
     AllUsers = async (payload = -1) => {
         return await userList.findAll({
-            where: {
+            /*where: {
                 [Op.not]:[
                     { id:{ [Op.eq]:payload } },
                 ]
-            },
+            },*/
             attributes: {
                 // include: [],  //外來鍵欄位
                 exclude: ['password']  //不顯示欄位
@@ -50,4 +50,4 @@ class userService {
     }
 }
 
-export default new userService();;
+export default new userService();

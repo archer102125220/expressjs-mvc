@@ -1,16 +1,20 @@
 import crypto from 'crypto';
+import fs from 'fs';
 import UserService from './../services/userService';
 import JWTMiddleware from './../middlewares/JWT';
 
 class Users {
     usersList = async (req, res, next) => {
         //const { id, start, end } = req.body; //→接受前端來的資料
-        console.log(req.auth);
         const userData = await UserService.AllUsers(req.auth.id);
         if ((userData || []).length === 0) {
             res.status(200).json('查無資料');
         }
-        res.status(200).json([{ ...req.auth }, ...userData]);
+        //res.status(200).json([{ ...req.auth }, ...userData]);
+        /*res.status(200).json(userData.map(element=>{
+            return {...element, avater : fs.readFileSync(__dirname+'/../public'+element.avater)};
+        }));*/
+        res.status(200).json(userData);
     }
 
     findUser = async (req, res, next) => {

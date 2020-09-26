@@ -35,6 +35,10 @@ class uploader {
         return this.imgUploader.array('images',10);
     }
 
+    Img =  () => {
+        return this.imgUploader.single('images');
+    }
+
     avater = () => {
         return !process.env.BUFFER_IMAGE ? this.avaterUploader.single('avater') : this.imgUploader.single('avater');
     }

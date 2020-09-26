@@ -27,7 +27,7 @@ class Users {
     }
     
     loginUser = async (req, res, next) => {
-        const { account, password } = req.query; //→接受URL上的資料(ex:/api/users/account/:name)
+        const { account, password } = req.query;
         const userData = await UserService.findUser({
             account,
             password:crypto.createHash('sha1').update(password).digest('hex')
@@ -41,7 +41,7 @@ class Users {
     }
 
     createUser = async (req, res, next) => {
-        const { body:payload } = req; 
+        const { body:payload } = req;
         const clear = await UserService.createUser({...payload, avater:(req.file || {}).filename});
 
         if(clear){

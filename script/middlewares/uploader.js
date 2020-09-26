@@ -35,8 +35,8 @@ class uploader {
         return this.imgUploader.array('images',10);
     }
 
-    Img =  () => {
-        return this.imgUploader.single('images');
+    img =  () => {
+        return this.imgUploader.single('image');
     }
 
     avater = () => {

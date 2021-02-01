@@ -3,10 +3,11 @@ import Express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import cors from 'cors';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import JWTMiddleware from './middlewares/JWT';
-import cors from 'cors';
+//import uploader from './middlewares/uploader';
 
 class App extends Express {
   constructor(porps) {
@@ -18,15 +19,19 @@ class App extends Express {
     logger('dev'),//將執行途中的狀態(如：errorMessage、warning等)console出來  https://andy6804tw.github.io/2017/12/27/middleware-tutorial/
     Express.json(),
     Express.urlencoded({ extended: false }),
-    cookieParser(),
+    cookieParser(),//將cookie塞進controller的req物件裡面  http://expressjs.com/en/resources/middleware/cookie-parser.html
     Express.static(path.join(__dirname, 'public')),//https://expressjs.com/zh-tw/starter/static-files.html
     cors(),
     JWTMiddleware.unless({ path: [
       '/',
       /^\/api\/users\/account\/.*/,
       '/api/users/registered',
+      '/api/users/img_upload_test',
+      '/api/users/video_upload_test',
       '/api/users/login'
-    ]})
+    ]}),
+    //uploader.video(),
+    //uploader.avater()
   ]
 
   routesWeb = [
@@ -39,14 +44,15 @@ class App extends Express {
 
   routeList = []
 
-  templateViews = {
+  setting = {
     'views': path.join(__dirname, 'views'),
-    'view engine': 'ejs'
+    'view engine': 'ejs',
+    'trust proxy': true
   }
 
   init = () => {
-    for (const key in this.templateViews) {
-      this.set(key, this.templateViews[key]);
+    for (const key in this.setting) {
+      this.set(key, this.setting[key]);
     }
 
     this.middlewares.forEach(element => {
@@ -64,12 +70,13 @@ class App extends Express {
       });
       this.use(element.prefix, element.route);
     });
+
     this.routesApi.forEach(element => {
       element.route.stack.forEach(({ route }) => {
         const path = '/api' + ((route.path === element.prefix || route.path === '/') ? element.prefix : element.prefix + route.path);
         this.routeList.push(path);
       });
-      this.use('/api' + element.prefix, element.route);
+      this.use('/api' + (element.prefix || ''), element.route);
     });
 
     // catch 404 and forward to error handler
@@ -80,13 +87,16 @@ class App extends Express {
     // error handler
     this.use(function (err, req, res, next) {
       if(err.name === 'UnauthorizedError'){
-        console.log('invalid token');
+        console.error('invalid token');
         res.status(401).send('invalid token');
         return;
       }
       // set locals, only providing error in development
-      res.locals.message = err.message;
-      res.locals.error = req.app.get('env') === 'development' ? err : {};
+        res.locals.message = err.message;
+        console.log(err.message);
+        //res.locals.error = req.app.get('env') === 'development' ? err : {};
+        console.log(err.status);
+        console.log(err.stack);
 
       // render the error page
       res.status(err.status || 500);

@@ -35,14 +35,15 @@ if (process.env.HTTP) {
   server.listen(port, process.env.APP_HOST || '0.0.0.0'); //Listen on provided port, on all network interfaces.
   server.on('error', onError);
   server.on('listening', () => onListening(server));
+  server.on('request', (request, response) => ipLog(request, response));
 }
 
 if (process.env.HTTPS) {
   //https://medium.com/@savemuse/node-js-%E5%BB%BA%E7%AB%8Bhttps%E4%BC%BA%E6%9C%8D%E5%99%A8-46442e9cd433
   //https://dev.twsiyuan.com/2017/10/openssl-unable-to-load-config.html
-  const privateKey = fs.readFileSync(__dirname + '/sslcert/server-key.pem', 'utf8');
-  const certificate = fs.readFileSync(__dirname + '/sslcert/server-cert.pem', 'utf8');
-  const ca = fs.readFileSync(__dirname + '/sslcert/cert.pem', 'utf8');
+  const privateKey = fs.readFileSync(__dirname + '/../../sslcert/server-key.pem', 'utf8');
+  const certificate = fs.readFileSync(__dirname + '/../../sslcert/server-cert.pem', 'utf8');
+  const ca = fs.readFileSync(__dirname + '/../../sslcert/cert.pem', 'utf8');
   const credentials = { key: privateKey, cert: certificate, ca, passphrase: '??' };
   const httpsServer = https.createServer(credentials, App);
   if (Socket.state !== 'connected' && Socket.state !== 'connection') {
@@ -51,6 +52,7 @@ if (process.env.HTTPS) {
   httpsServer.listen(sslPort, process.env.APP_HOST || '0.0.0.0');
   httpsServer.on('error', onError);
   httpsServer.on('listening', () => onListening(httpsServer));
+  httpsServer.on('request', (request, response) => ipLog(request, response));
 }
 
 /**
@@ -124,4 +126,17 @@ function onListening(services) {
     outPut += 'http';
   }
   console.log(`${outPut} server is listen on ${bind}`); // eslint-disable-line no-console
+}
+
+function ipLog(request, response){
+  console.log('-------------ip log---------------');
+  console.log('a user from :');
+  console.log(`${request.connection.remoteAddress}:${request.connection.remotePort}`);
+  //console.log('connection:');
+  //console.log(request.connection);
+  //console.log(request.headers["x-forwarded-for"],request.headers["X-Forwarded-Port"]);
+  console.log('headers:');
+  console.log(request.headers);
+  //console.log(request.connection);
+  console.log('-------------ip log end---------------');
 }

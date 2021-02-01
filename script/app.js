@@ -37,6 +37,8 @@ class App extends Express {
     { prefix: '/users', route: usersRouter }
   ]
 
+  routeList = []
+
   templateViews = {
     'views': path.join(__dirname, 'views'),
     'view engine': 'ejs'
@@ -56,9 +58,17 @@ class App extends Express {
     });
 
     this.routesWeb.forEach(element => {
+      element.route.stack.forEach(({ route }) => {
+        const path = (route.path === element.prefix || route.path === '/') ? element.prefix : element.prefix + route.path;
+        this.routeList.push(path);
+      });
       this.use(element.prefix, element.route);
     });
     this.routesApi.forEach(element => {
+      element.route.stack.forEach(({ route }) => {
+        const path = '/api' + ((route.path === element.prefix || route.path === '/') ? element.prefix : element.prefix + route.path);
+        this.routeList.push(path);
+      });
       this.use('/api' + element.prefix, element.route);
     });
 

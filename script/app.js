@@ -13,6 +13,7 @@ class App extends Express {
   constructor(porps) {
     super(porps);
     this.init();
+    console.log(this.routeList);
   }
 
   middlewares = [
@@ -73,7 +74,7 @@ class App extends Express {
 
     this.routesApi.forEach(element => {
       element.route.stack.forEach(({ route }) => {
-        const path = '/api' + ((route.path === element.prefix || route.path === '/') ? element.prefix : element.prefix + route.path);
+        const path = '/api' + ((route.path === element.prefix || route.path === '/') ? (element.prefix || '') : (element.prefix || '') + route.path);
         this.routeList.push(path);
       });
       this.use('/api' + (element.prefix || ''), element.route);

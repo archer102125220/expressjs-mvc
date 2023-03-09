@@ -12,10 +12,16 @@
   <p>Welcome to <%= title %></p>
   <button onclick="sseController.init()">sse test init</button>
   <button onclick="sseController.close()">sse test close</button>
+  <button onclick="WebAuthnTest()">WebAuthnTest</button>
+
+  <div id="server_data" style="display: none;"><%= serverData %></div>
 </body>
 
 </html>
 <script>
   console.log('<%= title %>');
+</script>
+<script>
+  const SERVER_DATA = JSON.parse(document.getElementById('server_data').innerText);
 </script>
 <script src='/javascripts/javascriptFile.js'></script>

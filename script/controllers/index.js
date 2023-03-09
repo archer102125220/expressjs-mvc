@@ -1,10 +1,13 @@
 //import Socket from '../socketIo';
 //import userService from './../services/userService';
+import crypto from 'node:crypto';
 
 class Index {
     homePage = async (req, res, next) => {
         // Socket.io.emit('testEvent', await userService.AllUsers());
-        res.render('index', { title: 'Express' });
+        const challenge = new Uint8Array(32);
+        crypto.getRandomValues(challenge);
+        res.render('index', { title: 'Express', serverData: JSON.stringify({ challenge }) });
     }
     // https://stackoverflow.com/questions/34657222/how-to-use-server-sent-events-in-express-js
     sseTest = (req, res, next) => {

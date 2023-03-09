@@ -27,3 +27,45 @@ const sseController = {
     sseController.es = null;
   }
 };
+
+async function WebAuthnTest() {
+  let div = document.getElementById('WebAuthnTestOutput');
+  if (div === null) {
+    div = document.createElement('div');
+    div.id = 'WebAuthnTestOutput';
+    document.body.append(div);
+  }
+  try {
+    const challenge = SERVER_DATA.challenge;
+
+    const userID = 'Kosv9fPtkDoh4Oz7Yq/pVgWHS8HhdlCto5cR0aBoVMw=';
+    const id = Uint8Array.from(window.atob(userID), c => c.charCodeAt(0));
+
+    const publicKeyCredentialCreationOptions = {
+      challenge,
+      rp: {
+        name: "Tech Bridge",
+        // id: "techbridge.inc",
+      },
+      user: {
+        id,
+        name: "arvin@techbridge.cc",
+        displayName: "Arvin",
+      },
+      pubKeyCredParams: [{ alg: -7, type: "public-key" }],
+      authenticatorSelection: {
+        authenticatorAttachment: "platform",
+      },
+      timeout: 60000,
+      attestation: "direct"
+    };
+    const credential = await navigator.credentials.create({
+      publicKey: publicKeyCredentialCreationOptions
+    });
+    div.innerHTML = JSON.stringify(credential);
+  } catch (error) {
+    alert('error');
+    alert(navigator.credentials);
+    div.innerHTML = JSON.stringify(navigator.credentials || {});
+  }
+}

@@ -5,11 +5,12 @@
  */
 
 import 'dotenv/config';
-import App from './../app';
 import debuger from 'debug';
 import http from 'http';
 import fs from 'fs';
 import https from 'https';
+
+import App from './../app';
 import Socket from './../socketIo';
 
 const debug = debuger('expressjs-mvc:server');

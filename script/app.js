@@ -29,14 +29,15 @@ class App extends Express {
       '/api/users/registered',
       '/api/users/img_upload_test',
       '/api/users/video_upload_test',
-      '/api/users/login'
+      '/api/users/login',
+      '/sse'
     ]}),
     //uploader.video(),
     //uploader.avater()
   ]
 
   routesWeb = [
-    { prefix: '/', route: indexRouter },
+    { prefix: '/', route: indexRouter }
   ]
 
   routesApi = [

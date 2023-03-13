@@ -2,7 +2,7 @@ import Express from 'express';
 import Users from './../controllers/users';
 import uploader from './../middlewares/uploader';
 
-class router extends Express.Router {
+class usersRouter extends Express.Router {
   constructor(props) {
     super(props);
     this.get('/', Users.usersList);
@@ -15,4 +15,4 @@ class router extends Express.Router {
 
 }
 
-export default new router();
+export default new usersRouter();

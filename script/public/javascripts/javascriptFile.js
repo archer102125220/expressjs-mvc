@@ -22,9 +22,11 @@ const sseController = {
     }, false);
   },
   close() {
-    sseController.es.close();
+    if (sseController.es !== null) {
+      sseController.es.close();
 
-    sseController.es = null;
+      sseController.es = null;
+    }
   }
 };
 
@@ -64,8 +66,10 @@ async function WebAuthnTest() {
     });
     div.innerHTML = JSON.stringify(credential);
   } catch (error) {
-    alert('error');
-    alert(navigator.credentials);
+    console.log(navigator.credentials);
+    console.log(error);
+    // alert('error');
+    // alert(navigator.credentials);
     div.innerHTML = JSON.stringify(navigator.credentials || {});
   }
 }

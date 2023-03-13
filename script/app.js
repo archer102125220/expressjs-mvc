@@ -6,6 +6,7 @@ import logger from 'morgan';
 import cors from 'cors';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
+import sseRouter from './routes/sse';
 import JWTMiddleware from './middlewares/JWT';
 //import uploader from './middlewares/uploader';
 
@@ -37,7 +38,8 @@ class App extends Express {
   ]
 
   routesWeb = [
-    { prefix: '/', route: indexRouter }
+    { prefix: '/', route: indexRouter },
+    { prefix: '/sse', route: sseRouter }
   ]
 
   routesApi = [

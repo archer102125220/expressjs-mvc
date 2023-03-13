@@ -2,19 +2,27 @@
 <html>
 
 <head>
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='shortcut icon' href='/images/favicon.ico'>
 </head>
 
 <body>
-  <h1><%= title %></h1>
-  <p>Welcome to <%= title %></p>
+  <h1>
+    <%= title %>
+  </h1>
+  <p>
+    Welcome to <%= title %>
+  </p>
   <button onclick="sseController.init()">sse test init</button>
   <button onclick="sseController.close()">sse test close</button>
   <button onclick="WebAuthnTest()">WebAuthnTest</button>
 
-  <div id="server_data" style="display: none;"><%= serverData %></div>
+  <div id="server_data" style="display: none;">
+    <%= serverData %>
+  </div>
 </body>
 
 </html>
@@ -23,5 +31,6 @@
 </script>
 <script>
   const SERVER_DATA = JSON.parse(document.getElementById('server_data').innerText);
+  SERVER_DATA.challenge = new Uint8Array(SERVER_DATA.challenge.split(','));
 </script>
 <script src='/javascripts/javascriptFile.js'></script>

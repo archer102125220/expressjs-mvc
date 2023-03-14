@@ -6,7 +6,8 @@ class testEvent {
         return { testData: 123 };
     }
     clickEvent = async (socket, name, payload) => {
-        const data = await userService.findUser(payload);
+        // const data = await userService.findUser(payload);
+        const data = { testData: 456 };
         socket.emit(name, data);
     }
 }

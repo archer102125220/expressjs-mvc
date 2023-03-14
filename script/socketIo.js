@@ -1,7 +1,7 @@
-import socketIO from 'socket.io';
+import { Server } from "socket.io";
 import testEvent from './socket/testEvent';
 
-class SocketIo extends socketIO {
+class SocketIo extends Server {
     io = {}
     state = ''
 
